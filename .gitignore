@@ -1,0 +1,6 @@
+.vs
+.DS_Store
+Thumbs.db
+FarmManagement/bin
+FarmManagement/obj
+packages
