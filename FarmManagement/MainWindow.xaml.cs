@@ -126,6 +126,23 @@ namespace FarmManagement
                        select product;
             productList.ItemsSource = data;
         }
+
+		private string createID(string prefix)
+		{
+			var db = new FarmEntities();
+			var count = 0;
+
+			if (prefix == "P")
+			{
+				count = db.Products.Count();
+			}
+			else if (prefix == "CT")
+			{
+				count = db.Categories.Count();
+			}
+
+			return prefix + (count + 1).ToString("000");
+		}
     }
 
     public static class StringExtension
