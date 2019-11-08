@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,7 @@ namespace FarmManagement
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<Product> temp = new List<Product>();
+        FarmEntities db = new FarmEntities();
 
         public MainWindow()
         {
@@ -33,6 +34,7 @@ namespace FarmManagement
             ThemeEffectsHelper.IsAcrylicEnabled = true;
             FluentPalette.LoadPreset(FluentPalette.ColorVariation.Light);
             InitializeComponent();
+            productDataGrid.ItemsSource = db.Products.ToList();
         }
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
@@ -42,8 +44,6 @@ namespace FarmManagement
 
             if (screen.ShowDialog() == true)
             {
-                var db = new FarmEntities();
-
                 var workbook = new Workbook(screen.FileName);
 
                 var sheet = workbook.Worksheets[0];
@@ -57,8 +57,8 @@ namespace FarmManagement
                 {
                     var id = sheet.Cells[$"A{row}"].StringValue;
                     var name = sheet.Cells[$"B{row}"].StringValue;
-                    var price = sheet.Cells[$"C{row}"].FloatValue;
-                    var weight = sheet.Cells[$"D{row}"].FloatValue;
+                    var price = sheet.Cells[$"C{row}"].DoubleValue;
+                    var weight = sheet.Cells[$"D{row}"].DoubleValue;
                     //var imageName = sheet.Cells[$"E{row}"].StringValue;
 
                     //var imageSourceInfo = new FileInfo(screen.FileName);
@@ -78,6 +78,7 @@ namespace FarmManagement
                         Name = name,
                         Price = price,
                         Weight = weight,
+                        isDeleted = false
                         //Picture = uniqueName,
                     };
 
@@ -90,9 +91,7 @@ namespace FarmManagement
 
                 MessageBox.Show("Import successfully!", "Message");
 
-                temp = db.Products.ToList();
-
-                productList.ItemsSource = db.Products.ToList();
+                productDataGrid.ItemsSource = db.Products.ToList();
             }
         }
 
@@ -102,29 +101,69 @@ namespace FarmManagement
 
             if (newProduct.ShowDialog() == true)
             {
-                //...
+                var product = new Product()
+                {
+                    ID = "SP004",
+                    Name = newProduct.P_Name,
+                    Price = newProduct.P_Price,
+                    Weight = newProduct.P_Weight,
+                    isDeleted = false
+                    //Picture = uniqueName,
+                };
+
+                db.Products.Add(product);
+                db.SaveChanges();
+
+                productDataGrid.ItemsSource = db.Products.ToList();
             }
         }
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            Product selectedItem = (Product)productDataGrid.SelectedItem;
 
+            if (selectedItem != null)
+            {
+                var newProduct = new EditProductWindow();
+                newProduct.P_Name = selectedItem.Name;
+                newProduct.P_Price = selectedItem.Price ?? 0; // 0 se la gia tri mac dinh neu Price mang gia tri NULL
+                newProduct.P_Weight = selectedItem.Weight ?? 0;
+
+                if (newProduct.ShowDialog() == true)
+                {
+                    var update = (from product in db.Products where product.ID == selectedItem.ID select product).Single();
+                    update.Name = newProduct.P_Name;
+                    update.Price = newProduct.P_Price;
+                    update.Weight = newProduct.P_Weight;
+                    db.SaveChanges();
+
+                    productDataGrid.ItemsSource = db.Products.ToList();
+                }
+            }
         }
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            Product selectedItem = (Product)productDataGrid.SelectedItem;
 
+            if (selectedItem != null)
+            {
+                var delete = (from product in db.Products where product.ID == selectedItem.ID select product).Single();
+                db.Products.Remove(delete);
+                db.SaveChanges();
+
+                productDataGrid.ItemsSource = db.Products.ToList();
+            }
         }
 
         private void KeywordTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var keyword = keywordTextBox.Text;
-            // LINQ Language integrated query
-            var data = from product in temp
-                       where product.Name.ToLower().AccentRemoved()
-                                .Contains(keyword.ToLower().AccentRemoved())
+
+            var data = from product in db.Products.ToList()
+                       where product.Name.ToLower().AccentRemoved().Contains(keyword.ToLower().AccentRemoved()) 
                        select product;
-            productList.ItemsSource = data;
+            productDataGrid.ItemsSource = data;
         }
 
 		private string createID(string prefix)
