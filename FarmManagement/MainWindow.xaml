@@ -13,7 +13,7 @@
 
     <telerik:RadNavigationView x:Name="navigationView" PaneHeader="Farm Management">
         <telerik:RadNavigationView.Items>
-            <telerik:RadNavigationViewItem Content="Product" telerik:StyleManager.Theme="Material">
+            <telerik:RadNavigationViewItem Content="Product" telerik:StyleManager.Theme="Fluent">
                 <telerik:RadNavigationViewItem.Icon>
                     <telerik:RadGlyph Glyph="&#xe303;" FontSize="16"/>
                 </telerik:RadNavigationViewItem.Icon>
@@ -50,7 +50,7 @@
                         </StackPanel>
                     </Grid>
 
-                    <DataGrid AutoGenerateColumns="False" Name="productList" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Margin="10,0,10,10">
+                    <DataGrid AutoGenerateColumns="False" Name="productDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontSize="14" Margin="10,0,10,10">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Width="*" Binding="{Binding ID}"/>
                             <DataGridTextColumn Header="Tên sản phẩm" Width="4*" Binding="{Binding Name}"/>

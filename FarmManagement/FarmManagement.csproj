@@ -103,6 +103,9 @@
     <Compile Include="Customer.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Edit\EditProductWindow.xaml.cs">
+      <DependentUpon>EditProductWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Employee.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -133,13 +136,17 @@
     <Compile Include="Product.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Validation\NumberRule.cs" />
-    <Compile Include="Validation\StringRule.cs" />
-    <Page Include="AddCategoryWindow.xaml">
+    <Compile Include="Class\NumberRule.cs" />
+    <Compile Include="Class\StringRule.cs" />
+    <Page Include="Add\AddCategoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddProductWindow.xaml">
+    <Page Include="Add\AddProductWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Edit\EditProductWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,10 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="AddCategoryWindow.xaml.cs">
+    <Compile Include="Add\AddCategoryWindow.xaml.cs">
       <DependentUpon>AddCategoryWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AddProductWindow.xaml.cs">
+    <Compile Include="Add\AddProductWindow.xaml.cs">
       <DependentUpon>AddProductWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
@@ -163,7 +170,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PathConverter.cs" />
+    <Compile Include="Class\PathConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
