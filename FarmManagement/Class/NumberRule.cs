@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace FarmManagement.Validation
+namespace FarmManagement
 {
     class NumberRule : ValidationRule
     {

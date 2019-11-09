@@ -26,6 +26,7 @@ namespace FarmManagement
         public string CategoryID { get; set; }
         public Nullable<double> Price { get; set; }
         public Nullable<double> Weight { get; set; }
+        public string Picture { get; set; }
         public Nullable<bool> isDeleted { get; set; }
     
         public virtual Category Category { get; set; }

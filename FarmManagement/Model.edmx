@@ -77,6 +77,7 @@
           <Property Name="CategoryID" Type="varchar" MaxLength="10" />
           <Property Name="Price" Type="float" />
           <Property Name="Weight" Type="float" />
+          <Property Name="Picture" Type="ntext" />
           <Property Name="isDeleted" Type="bit" />
         </EntityType>
         <Association Name="FK_I_C">
@@ -270,6 +271,7 @@
           <Property Name="CategoryID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Price" Type="Double" />
           <Property Name="Weight" Type="Double" />
+          <Property Name="Picture" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="isDeleted" Type="Boolean" />
           <NavigationProperty Name="Category" Relationship="Self.FK_P_CT" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK_ID_P" FromRole="Product" ToRole="InvoiceDetail" />
@@ -462,6 +464,7 @@
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
               </MappingFragment>
             </EntityTypeMapping>
