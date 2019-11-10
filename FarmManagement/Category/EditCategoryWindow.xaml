@@ -9,7 +9,7 @@
     <Window.Resources>
         <ControlTemplate x:Key="validationTemplate">
             <StackPanel Orientation="Vertical">
-                <TextBlock Text="{Binding ErrorContent}" FontSize="14" Foreground="Red"/>
+                <TextBlock Text="{Binding ErrorContent}" FontSize="12" Foreground="Red"/>
                 <AdornedElementPlaceholder>
                 </AdornedElementPlaceholder>
             </StackPanel>
@@ -24,14 +24,14 @@
     </Window.Resources>
 
     <Grid>
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,10,0,0">
             <TextBox Name="NameTextBox" Width="200" Height="30" Margin="10" FontSize="14" VerticalContentAlignment="Center"
                 Style="{StaticResource textBoxError}"
                 Validation.ErrorTemplate="{StaticResource validationTemplate}">
                 <TextBox.Text>
                     <Binding Path="CT_Name" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <local:StringRule stringPattern="^[a-zA-Z0-9]{1,50}$"/>
+                            <local:StringRule stringPattern="^.{1,50}$"/>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>

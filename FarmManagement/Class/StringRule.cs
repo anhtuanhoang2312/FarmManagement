@@ -27,8 +27,6 @@ namespace FarmManagement
                 return new ValidationResult(false, "There's something wrong!");
             }
 
-            //string phonePattern = @"^[0][1-9]\d{8}$|^[0][1-9]\d{9}$";
-
             Regex regex = new Regex(stringPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
             var isValid = regex.IsMatch(String);
 

@@ -39,6 +39,7 @@ namespace FarmManagement
             Uri fileUri = new Uri(destinationPath);
 
             productImage.Source = new BitmapImage(fileUri);
+            P_Picture = picture;
 
             this.DataContext = this;
         }
