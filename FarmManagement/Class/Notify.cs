@@ -24,6 +24,21 @@ namespace FarmManagement.Class
             }
         }
 
+        private bool _productChange = false;
+
+        public bool ProductChange
+        {
+            get => _productChange;
+            set
+            {
+                _productChange = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("_productChange"));
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

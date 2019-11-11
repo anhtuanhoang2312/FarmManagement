@@ -25,13 +25,13 @@ namespace FarmManagement
     /// </summary>
     public partial class CategoryControl : UserControl
     {
-        public static Notify notification = new Notify();
+        public static Notify category_notification = new Notify();
 
         public CategoryControl()
         {
             InitializeComponent();
             categoryDataGrid.ItemsSource = MainWindow.db.Categories.ToList();
-            notification.PropertyChanged += Notification_PropertyChanged;
+            category_notification.PropertyChanged += CategoryNotification_PropertyChanged;
 
         }
         private void ImportButton_Click(object sender, RoutedEventArgs e)
@@ -120,11 +120,26 @@ namespace FarmManagement
 
             if (selectedItem != null)
             {
-                var delete = (from category in MainWindow.db.Categories where category.ID == selectedItem.ID select category).Single();
-                MainWindow.db.Categories.Remove(delete);
-                MainWindow.db.SaveChanges();
+                string message = "Are you sure you want to delete '" + selectedItem.Name + "'? This will also delete all products in this category.";
 
-                categoryDataGrid.ItemsSource = MainWindow.db.Categories.ToList();
+                if (MessageBox.Show(message, "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                {
+                    var deleteproduct = from product in MainWindow.db.Products
+                                     where product.CategoryID == selectedItem.ID
+                                     select product;
+                    foreach (var product in deleteproduct)
+                    {
+                        MainWindow.db.Products.Remove(product);
+                    }
+                    MainWindow.db.SaveChanges();
+                    ProductControl.product_notification.CategoryChange = true;
+
+                    var deletecategory = (from category in MainWindow.db.Categories where category.ID == selectedItem.ID select category).Single();
+                    MainWindow.db.Categories.Remove(deletecategory);
+                    MainWindow.db.SaveChanges();
+
+                    categoryDataGrid.ItemsSource = MainWindow.db.Categories.ToList();
+                }
             }
         }
 
@@ -138,7 +153,7 @@ namespace FarmManagement
             categoryDataGrid.ItemsSource = data;
         }
 
-        private void Notification_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void CategoryNotification_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             categoryDataGrid.ItemsSource = MainWindow.db.Categories.ToList();
         }

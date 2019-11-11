@@ -26,19 +26,14 @@ namespace FarmManagement
     /// </summary>
     public partial class ProductControl : UserControl
     {
+        public static Notify product_notification = new Notify();
+
         public ProductControl()
         {
             InitializeComponent();
             productDataGrid.ItemsSource = MainWindow.db.Products.ToList();
+            product_notification.PropertyChanged += ProductNotification_PropertyChanged;
         }
-
-        //public static IEnumerable getQueryTable()
-        //{
-        //    var query = (from product in MainWindow.db.Products
-        //                 join category in MainWindow.db.Categories on product.CategoryID equals category.ID
-        //                 select new { product.Name, category.CategoryName, product.Price, product.Weight });
-        //    return query;
-        //}
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
         {
@@ -112,7 +107,7 @@ namespace FarmManagement
 
                             MainWindow.db.Categories.Add(category);
                             MainWindow.db.SaveChanges();
-                            CategoryControl.notification.CategoryChange = true;
+                            CategoryControl.category_notification.CategoryChange = true;
 
                             var name = sheet.Cells[$"B{row}"].StringValue;
                             var price = sheet.Cells[$"D{row}"].DoubleValue;
@@ -235,6 +230,11 @@ namespace FarmManagement
                        where product.Name.ToLower().AccentRemoved().Contains(keyword.ToLower().AccentRemoved())
                        select product;
             productDataGrid.ItemsSource = data;
+        }
+
+        private void ProductNotification_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            productDataGrid.ItemsSource = MainWindow.db.Products.ToList();
         }
     }
 }
