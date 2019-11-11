@@ -34,7 +34,7 @@
 
             <DataGrid AutoGenerateColumns="False" Name="productDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                               DataGrid.GridLinesVisibility="None"  HeadersVisibility="Column" CanUserAddRows="False" SelectionMode="Single" 
-                              FontSize="14" Margin="10,0,10,10">
+                              IsReadOnly="True" FontSize="14" Margin="10,0,10,10">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">
                         <Setter Property="Template">
@@ -58,7 +58,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Name" Width="3*" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Category" Width="2*" Binding="{Binding CategoryID}"/>
+                    <DataGridTextColumn Header="Category" Width="2*" Binding="{Binding Category.Name}"/>
                     <DataGridTextColumn Header="Price" Width="1.5*" Binding="{Binding Price}"/>
                     <DataGridTextColumn Header="Weight" Width="1.5*" Binding="{Binding Weight}"/>
                 </DataGrid.Columns>

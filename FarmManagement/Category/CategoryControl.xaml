@@ -34,7 +34,7 @@
 
             <DataGrid AutoGenerateColumns="False" Name="categoryDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                               DataGrid.GridLinesVisibility="None"  HeadersVisibility="Column" CanUserAddRows="False" SelectionMode="Single" 
-                              FontSize="14" Margin="10,0,10,10">
+                              IsReadOnly="True" FontSize="14" Margin="10,0,10,10">
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridCell}">
                         <Setter Property="Template">
