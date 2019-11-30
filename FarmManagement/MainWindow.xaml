@@ -4,24 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FarmManagement"
-        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d" Title="Farm Management" Height="650" Width="1200" WindowStartupLocation="CenterScreen">
-    <!--<Window.Resources>
-        <Style BasedOn="{StaticResource SideMenuBaseStyle}" TargetType="hc:SideMenu">
-            <Setter Property="ExpandMode" Value="Accordion"/>
-            <Setter Property="ItemContainerStyle" Value="{StaticResource SideMenuItemHeaderAccordionBaseStyle}"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="hc:SideMenu">
-                        <Border Name="BorderRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
-                            <StackPanel x:Name="PART_Panel"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -29,32 +13,25 @@
         </Grid.ColumnDefinitions>
 
         <hc:SideMenu Name="sideMenu" hc:SideMenuItem.Selected="sideMenu_Selected">
-            <hc:SideMenuItem Name="root_Products" Header="Products">
-                <hc:SideMenuItem Name="ImportP" Header="Import"/>
+            <hc:SideMenuItem Name="MainDashboard" Header="Dashboard"/>
+
+            <hc:SideMenuItem Name="MainProducts" Header="Products">
                 <hc:SideMenuItem Name="Products" Header="Products"/>
                 <hc:SideMenuItem Name="Categories" Header="Categories"/>
             </hc:SideMenuItem>
-            
-            <hc:SideMenuItem Name="root_Customers" Header="Customers">
-                <hc:SideMenuItem Name="ImportC" Header="Import"/>
+
+            <hc:SideMenuItem Name="MainSales" Header="Sales">
                 <hc:SideMenuItem Name="Customers" Header="Customers"/>
+                <hc:SideMenuItem Name="Invoices"  Header="Invoices"/>
             </hc:SideMenuItem>
 
-            <hc:SideMenuItem Name="root_Sales" Header="Sales">
-                <hc:SideMenuItem Name="ImportS" Header="Import"/>
-                <hc:SideMenuItem Name="Sales"  Header="Sales"/>
-            </hc:SideMenuItem>
-
-            <hc:SideMenuItem Name="root_Employees" Header="Employees">
-                <hc:SideMenuItem Name="ImportE" Header="Import"/>
+            <hc:SideMenuItem Name="MainEmployees" Header="Employees">
                 <hc:SideMenuItem Name="Employees" Header="Employees"/>
                 <hc:SideMenuItem Name="Payroll" Header="Payroll"/>
             </hc:SideMenuItem>
-            
-            <hc:SideMenuItem Name="About"  Header="About"/>
         </hc:SideMenu>
 
         <Grid Grid.Column="1" Name="MainContent" Background="#FFFFFFFF"/>
-        
+
     </Grid>
 </Window>

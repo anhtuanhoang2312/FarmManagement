@@ -6,9 +6,6 @@
              xmlns:local="clr-namespace:FarmManagement"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="1000">
-    <UserControl.Resources>
-        <local:PathConverter x:Key="converter"></local:PathConverter>
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -25,7 +22,7 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBlock Text="Search:" Margin="0,10" VerticalAlignment="Center"/>
-                <TextBox Name="keywordTextBox" Width="200" Height="30" TextChanged="KeywordTextBox_TextChanged" Margin="10" FontSize="14" VerticalContentAlignment="Center">
+                <TextBox Name="keywordTextBox" Width="200" Height="30" TextChanged="KeywordTextBox_TextChanged" Margin="10" VerticalContentAlignment="Center">
                 </TextBox>
             </StackPanel>
         </Grid>

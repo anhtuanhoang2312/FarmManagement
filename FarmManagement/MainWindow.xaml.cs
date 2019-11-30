@@ -33,31 +33,9 @@ namespace FarmManagement
         public static CategoryControl categorypg = new CategoryControl();
 
         public MainWindow()
-        {
-            //StyleManager.ApplicationTheme = new Office2013Theme();
-            //ThemeEffectsHelper.IsAcrylicEnabled = true;
-            //FluentPalette.LoadPreset(FluentPalette.ColorVariation.Light);
-            
+        {         
             InitializeComponent();
         }
-
-        //private void navigationView_ItemClick(object sender, RoutedEventArgs e)
-        //{
-        //    var item = e.OriginalSource as RadNavigationViewItem;
-        //    if (item != null)
-        //    {
-        //        Debug.WriteLine(item.Name);
-
-        //        if (item.Name == "Product")
-        //        {
-        //            Control.Show(MainContent, productpg);
-        //        }
-        //        else if (item.Name == "Category")
-        //        {
-        //            Control.Show(MainContent, categorypg);
-        //        }
-        //    }
-        //}
 
         private void sideMenu_Selected(object sender, RoutedEventArgs e)
         {
