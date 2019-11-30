@@ -23,6 +23,7 @@ namespace FarmManagement
         public string ID { get; set; }
         public string CustomerID { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
+        public Nullable<double> Total { get; set; }
         public Nullable<bool> isDeleted { get; set; }
     
         public virtual Customer Customer { get; set; }

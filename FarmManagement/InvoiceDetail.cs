@@ -19,7 +19,6 @@ namespace FarmManagement
         public Nullable<double> Weight { get; set; }
         public Nullable<double> UnitPrice { get; set; }
         public Nullable<double> Amount { get; set; }
-        public Nullable<double> Total { get; set; }
         public Nullable<bool> isDeleted { get; set; }
     
         public virtual Invoice Invoice { get; set; }
