@@ -23,7 +23,7 @@ namespace FarmManagement
         public string ID { get; set; }
         public string Name { get; set; }
         public string Telephone { get; set; }
-        public string IdentityCard { get; set; }
+        public string Address { get; set; }
         public Nullable<bool> isDeleted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
