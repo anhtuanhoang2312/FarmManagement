@@ -1,5 +1,6 @@
 ﻿using Aspose.Cells;
 using FarmManagement.Class;
+using HandyControl.Controls;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -19,15 +20,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Telerik.Windows.Controls;
-using Telerik.Windows.Controls.MaterialControls;
 
 namespace FarmManagement
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         public static FarmEntities db = new FarmEntities();
         public static ProductControl productpg = new ProductControl();
@@ -35,24 +34,41 @@ namespace FarmManagement
 
         public MainWindow()
         {
-            StyleManager.ApplicationTheme = new FluentTheme();
-            ThemeEffectsHelper.IsAcrylicEnabled = true;
-            FluentPalette.LoadPreset(FluentPalette.ColorVariation.Light);
+            //StyleManager.ApplicationTheme = new Office2013Theme();
+            //ThemeEffectsHelper.IsAcrylicEnabled = true;
+            //FluentPalette.LoadPreset(FluentPalette.ColorVariation.Light);
+            
             InitializeComponent();
         }
 
-        private void navigationView_ItemClick(object sender, RoutedEventArgs e)
+        //private void navigationView_ItemClick(object sender, RoutedEventArgs e)
+        //{
+        //    var item = e.OriginalSource as RadNavigationViewItem;
+        //    if (item != null)
+        //    {
+        //        Debug.WriteLine(item.Name);
+
+        //        if (item.Name == "Product")
+        //        {
+        //            Control.Show(MainContent, productpg);
+        //        }
+        //        else if (item.Name == "Category")
+        //        {
+        //            Control.Show(MainContent, categorypg);
+        //        }
+        //    }
+        //}
+
+        private void sideMenu_Selected(object sender, RoutedEventArgs e)
         {
-            var item = e.OriginalSource as RadNavigationViewItem;
+            var item = e.OriginalSource as SideMenuItem;
             if (item != null)
             {
-                Debug.WriteLine(item.Name);
-
-                if (item.Name == "Product")
+                if (item.Name == "Products")
                 {
                     Control.Show(MainContent, productpg);
                 }
-                else if (item.Name == "Category")
+                else if (item.Name == "Categories")
                 {
                     Control.Show(MainContent, categorypg);
                 }
