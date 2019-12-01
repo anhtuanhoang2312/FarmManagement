@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FarmManagement"
         xmlns:hc="https://handyorg.github.io/handycontrol"
-        mc:Ignorable="d" Title="Farm Management" Height="650" Width="1200" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Title=" Farm Management" Height="650" Width="1200" 
+        WindowStartupLocation="CenterScreen" Icon="/Icon/App.png"
+        RenderOptions.BitmapScalingMode="HighQuality">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
@@ -13,19 +15,32 @@
         </Grid.ColumnDefinitions>
 
         <hc:SideMenu Name="sideMenu" hc:SideMenuItem.Selected="sideMenu_Selected">
-            <hc:SideMenuItem Name="MainDashboard" Header="Dashboard"/>
+            <hc:SideMenuItem Name="MainDashboard" Header="Dashboard">
+                <hc:SideMenuItem.Icon>
+                <Image Source="/Icon/Dashboard.png" Width="24" Height="24"/>
+                </hc:SideMenuItem.Icon>
+            </hc:SideMenuItem>
 
             <hc:SideMenuItem Name="MainProducts" Header="Products">
+                <hc:SideMenuItem.Icon>
+                    <Image Source="/Icon/Product.png" Width="24" Height="24"/>
+                </hc:SideMenuItem.Icon>
                 <hc:SideMenuItem Name="Products" Header="Products"/>
                 <hc:SideMenuItem Name="Categories" Header="Categories"/>
             </hc:SideMenuItem>
 
             <hc:SideMenuItem Name="MainSales" Header="Sales">
+                <hc:SideMenuItem.Icon>
+                    <Image Source="/Icon/Sale.png" Width="24" Height="24"/>
+                </hc:SideMenuItem.Icon>
                 <hc:SideMenuItem Name="Customers" Header="Customers"/>
                 <hc:SideMenuItem Name="Invoices"  Header="Invoices"/>
             </hc:SideMenuItem>
 
             <hc:SideMenuItem Name="MainEmployees" Header="Employees">
+                <hc:SideMenuItem.Icon>
+                    <Image Source="/Icon/Employee.png" Width="24" Height="24"/>
+                </hc:SideMenuItem.Icon>
                 <hc:SideMenuItem Name="Employees" Header="Employees"/>
                 <hc:SideMenuItem Name="Payroll" Header="Payroll"/>
             </hc:SideMenuItem>

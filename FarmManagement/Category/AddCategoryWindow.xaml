@@ -4,39 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FarmManagement"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d"
         Title="Add Category" Height="110" Width="360" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Window.Resources>
-        <ControlTemplate x:Key="validationTemplate">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{Binding ErrorContent}" FontSize="12" Foreground="Red"/>
-                <AdornedElementPlaceholder>
-                </AdornedElementPlaceholder>
-            </StackPanel>
-        </ControlTemplate>
-        <Style x:Key="textBoxError" TargetType="{x:Type TextBox}">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="True">
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
-    
     <Grid>
-        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="0,10,0,0">
-            <TextBox Name="NameTextBox" Width="200" Height="30" Margin="10" FontSize="14" VerticalContentAlignment="Center"
-                Style="{StaticResource textBoxError}"
-                Validation.ErrorTemplate="{StaticResource validationTemplate}">
-                <TextBox.Text>
-                    <Binding Path="CT_Name" UpdateSourceTrigger="PropertyChanged">
-                        <Binding.ValidationRules>
-                            <local:StringRule stringPattern="^.{1,50}$"/>
-                        </Binding.ValidationRules>
-                    </Binding>
-                </TextBox.Text>
-            </TextBox>
-            <Button Name="CreateBtn" Click="CreateBtn_Click"  Margin="10" IsDefault="True" HorizontalAlignment="Center" Width="80" Height="30">Create</Button>
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <hc:TextBox Name="NameTextBox" Width="200" Height="30" Margin="10" VerticalContentAlignment="Center"
+                ShowClearButton="True" TextType="Common" hc:InfoElement.Placeholder="Please enter name"/>
+            <Button Name="CreateBtn" Click="CreateBtn_Click" Margin="10" IsDefault="True" HorizontalAlignment="Center" Width="80">Create</Button>
         </StackPanel>
     </Grid>
 </Window>

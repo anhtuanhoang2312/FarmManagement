@@ -100,8 +100,8 @@ namespace FarmManagement
 
             if (selectedItem != null)
             {
-                var newCategory = new EditCategoryWindow();
-                newCategory.CT_Name = selectedItem.Name;
+                var newCategory = new EditCategoryWindow(selectedItem);
+                //newCategory.CT_Name = selectedItem.Name;
 
                 if (newCategory.ShowDialog() == true)
                 {

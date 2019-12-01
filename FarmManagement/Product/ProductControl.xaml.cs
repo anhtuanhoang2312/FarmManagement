@@ -187,11 +187,13 @@ namespace FarmManagement
 
             if (selectedItem != null)
             {
-                var newProduct = new EditProductWindow(selectedItem.CategoryID, selectedItem.Picture);
+                //var newProduct = new EditProductWindow(selectedItem.CategoryID, selectedItem.Picture);
 
-                newProduct.P_Name = selectedItem.Name;
-                newProduct.P_Price = selectedItem.Price ?? 0; // 0 se la gia tri mac dinh neu Price mang gia tri NULL
-                newProduct.P_Weight = selectedItem.Weight ?? 0;
+                //newProduct.P_Name = selectedItem.Name;
+                //newProduct.P_Price = selectedItem.Price ?? 0; // 0 se la gia tri mac dinh neu Price mang gia tri NULL
+                //newProduct.P_Weight = selectedItem.Weight ?? 0;
+
+                var newProduct = new EditProductWindow(selectedItem);
 
                 if (newProduct.ShowDialog() == true)
                 {

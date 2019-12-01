@@ -27,19 +27,23 @@ namespace FarmManagement
         public double P_Weight { get; set; }
         public string P_Picture { get; set; }
 
-        public EditProductWindow(string category, string picture)
+        public EditProductWindow(Product item)
         {
             InitializeComponent();
 
-            CategoryComboBox.ItemsSource = MainWindow.db.Categories.ToList();
-            CategoryComboBox.SelectedIndex = FindIndex(MainWindow.db.Categories.ToList(), category);
+            NameTextBox.Text = item.Name;
 
+            CategoryComboBox.ItemsSource = MainWindow.db.Categories.ToList();
+            CategoryComboBox.SelectedIndex = FindIndex(MainWindow.db.Categories.ToList(), item.CategoryID);
+
+            PriceTextBox.Text = item.Price.ToString();
+            WeightTextBox.Text = item.Weight.ToString();
             var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            var destinationPath = $"{baseDirectory}image\\{picture}"; 
+            var destinationPath = $"{baseDirectory}image\\{item.Picture}";
             Uri fileUri = new Uri(destinationPath);
 
             productImage.Source = new BitmapImage(fileUri);
-            P_Picture = picture;
+            P_Picture = item.Picture;
 
             this.DataContext = this;
         }

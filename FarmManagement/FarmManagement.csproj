@@ -140,8 +140,6 @@
     <Compile Include="Product\EditProductWindow.xaml.cs">
       <DependentUpon>EditProductWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Class\NumberRule.cs" />
-    <Compile Include="Class\StringRule.cs" />
     <Page Include="Category\AddCategoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -235,6 +233,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>FarmDB.mdf</DependentUpon>
     </Content>
+    <Resource Include="Icon\app.png" />
+    <Resource Include="Icon\dashboard.png" />
+    <Resource Include="Icon\employee.png" />
+    <Resource Include="Icon\product.png" />
+    <Resource Include="Icon\sale.png" />
     <Content Include="Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>

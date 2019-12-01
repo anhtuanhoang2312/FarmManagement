@@ -21,9 +21,10 @@ namespace FarmManagement
     {
         public string CT_Name { get; set; }
 
-        public EditCategoryWindow()
+        public EditCategoryWindow(Category item)
         {
             InitializeComponent();
+            NameTextBox.Text = item.Name.ToString();
             this.DataContext = this;
         }
 

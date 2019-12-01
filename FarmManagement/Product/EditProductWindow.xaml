@@ -4,39 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FarmManagement"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d"
         Title="Edit Product" Height="300" Width="455" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Window.Resources>
-        <ControlTemplate x:Key="validationTemplate">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="{Binding ErrorContent}" FontSize="12" Foreground="Red"/>
-                <AdornedElementPlaceholder>
-                </AdornedElementPlaceholder>
-            </StackPanel>
-        </ControlTemplate>
-        <Style x:Key="textBoxError" TargetType="{x:Type TextBox}">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="True">
-                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
-
-    <Grid Margin="0,10,0,0">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="*"/>
-
         </Grid.RowDefinitions>
         <Grid x:Name="Field">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="130"/>
             </Grid.ColumnDefinitions>
-
-            <Grid Grid.Column="0" HorizontalAlignment="Left" Margin="10,0,10,0">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -44,69 +25,27 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Grid.Row="0" Text="Name:" FontSize="14" Margin="0,10" VerticalAlignment="Center"/>
-                <TextBlock Grid.Row="1" Text="Category:" FontSize="14" Margin="0,10" VerticalAlignment="Center"/>
-                <TextBlock Grid.Row="2" Text="Price:" FontSize="14" Margin="0,10" VerticalAlignment="Center"/>
-                <TextBlock Grid.Row="3" Text="Weight:" FontSize="14" Margin="0,10" VerticalAlignment="Center"/>
+                <hc:TextBox Grid.Row="0" Name="NameTextBox" Width="280" Height="30" Margin="10" VerticalContentAlignment="Center"
+                ShowClearButton="True" TextType="Common" hc:InfoElement.TitleWidth="60" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Name"/>
+
+                <hc:ComboBox Grid.Row="1" Name="CategoryComboBox" Width="280" Height="30" Margin="10" VerticalContentAlignment="Center"
+                DisplayMemberPath="Name" SelectedValuePath="ID" Focusable="False" IsEditable="True" IsReadOnly="True"
+                hc:InfoElement.TitleWidth="60" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Category"/>
+
+                <hc:TextBox Grid.Row="2" Name="PriceTextBox" Width="280" Height="30" Margin="10" VerticalContentAlignment="Center"
+                ShowClearButton="True" TextType="Common"  hc:InfoElement.TitleWidth="60" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Price"/>
+
+                <hc:TextBox Grid.Row="3" Name="WeightTextBox" Width="280" Height="30" Margin="10" VerticalContentAlignment="Center"
+                ShowClearButton="True" TextType="Common" hc:InfoElement.TitleWidth="60" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Weight"/>
             </Grid>
 
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <TextBox Grid.Row="0" Name="NameTextBox" Width="200" Height="30" Margin="10" FontSize="14" VerticalContentAlignment="Center"
-                Style="{StaticResource textBoxError}"
-                Validation.ErrorTemplate="{StaticResource validationTemplate}">
-                    <TextBox.Text>
-                        <Binding Path="P_Name" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <local:StringRule stringPattern="^.{1,50}$"/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-                
-                <ComboBox Grid.Row="1" Name="CategoryComboBox" Width="200" Height="30" Margin="10" FontSize="14" VerticalContentAlignment="Center"
-                          DisplayMemberPath="Name" SelectedValuePath="ID" Focusable="False" IsEditable="True" IsReadOnly="True">
-                </ComboBox>
-                
-                <TextBox Grid.Row="2" Name="PriceTextBox" Width="200" Height="30" Margin="10" FontSize="14" VerticalContentAlignment="Center"
-                Style="{StaticResource textBoxError}"
-                Validation.ErrorTemplate="{StaticResource validationTemplate}">
-                    <TextBox.Text>
-                        <Binding Path="P_Price" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <local:NumberRule numberPattern="^(?:[1-9]\d*|0)?(?:\.\d+)?$"/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-                
-                <TextBox Grid.Row="3" Name="WeightTextBox" Width="200" Height="30" Margin="10" FontSize="14" VerticalContentAlignment="Center"
-                Style="{StaticResource textBoxError}"
-                Validation.ErrorTemplate="{StaticResource validationTemplate}">
-                    <TextBox.Text>
-                        <Binding Path="P_Weight" UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <local:NumberRule numberPattern="^(?:[1-9]\d*|0)?(?:\.\d+)?$"/>
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-            </Grid>
-
-            <Grid Grid.Column="2" HorizontalAlignment="Left" Margin="10,10,10,0">
-                <StackPanel VerticalAlignment="Center">
-                    <GroupBox Header="Image" FontSize="14" Padding="5">
-                        <StackPanel Orientation="Vertical">
-                            <Image Name="productImage" Width="100" Height="100"/>
-                        </StackPanel>
-                    </GroupBox>
-                    <Button Grid.Row="1" Name="ChangeBtn" Width="60" Height="30" Margin="10" Click="ChangeBtn_Click">Change</Button>
+            <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,10,0">
+                <StackPanel VerticalAlignment="Top">
+                    <TextBlock Text="Image" Margin="0,5,10,10"/>
+                    <Border BorderBrush="Silver" BorderThickness="1" CornerRadius="4">
+                        <Image Name="productImage" Width="90" Height="90" Margin="5"/>
+                    </Border>
+                    <Button Grid.Row="1" Name="ChangeBtn" Margin="10" Click="ChangeBtn_Click">Change</Button>
                 </StackPanel>
             </Grid>
         </Grid>
@@ -117,9 +56,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Name="UpdateBtn" Width="60" Height="30" Click="UpdateBtn_Click">Update</Button>
-            <Button Grid.Column="2" Name="Cancel" Width="60" Height="30" IsCancel="True">Cancel</Button>
+            <Button Grid.Column="1" Name="UpdateBtn" Width="80" Click="UpdateBtn_Click">Update</Button>
+            <Button Grid.Column="2" Name="Cancel" Width="80" IsCancel="True">Cancel</Button>
         </Grid>
     </Grid>
 </Window>
-
