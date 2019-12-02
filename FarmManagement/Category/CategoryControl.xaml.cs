@@ -101,13 +101,13 @@ namespace FarmManagement
             if (selectedItem != null)
             {
                 var newCategory = new EditCategoryWindow(selectedItem);
-                //newCategory.CT_Name = selectedItem.Name;
 
                 if (newCategory.ShowDialog() == true)
                 {
-                    var update = (from category in MainWindow.db.Categories where category.ID == selectedItem.ID select category).Single();
-                    update.Name = newCategory.CT_Name;
+                    var updatecategory = (from category in MainWindow.db.Categories where category.ID == selectedItem.ID select category).Single();
+                    updatecategory.Name = newCategory.CT_Name;
                     MainWindow.db.SaveChanges();
+                    ProductControl.product_notification.CategoryChange = true;
 
                     categoryDataGrid.ItemsSource = MainWindow.db.Categories.ToList();
                 }

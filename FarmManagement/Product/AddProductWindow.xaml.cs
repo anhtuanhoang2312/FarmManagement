@@ -36,13 +36,13 @@ namespace FarmManagement
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(NameTextBox.Text) && !string.IsNullOrWhiteSpace(PriceTextBox.Text) && !string.IsNullOrWhiteSpace(WeightTextBox.Text) && CategoryComboBox.SelectedItem != null)
+            if (!string.IsNullOrWhiteSpace(NameTextBox.Text) && PriceTextBox.Value > 0 && WeightTextBox.Value > 0 && CategoryComboBox.SelectedItem != null)
             {
                 P_Name = NameTextBox.Text;
                 var cat = CategoryComboBox.SelectedItem as Category;
                 P_CategoryID = cat.ID;
-                P_Price = double.Parse(PriceTextBox.Text);
-                P_Weight = double.Parse(WeightTextBox.Text);
+                P_Price = PriceTextBox.Value;
+                P_Weight = WeightTextBox.Value;
                 this.DialogResult = true;
             }
         }

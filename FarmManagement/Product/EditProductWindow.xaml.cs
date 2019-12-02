@@ -36,27 +36,33 @@ namespace FarmManagement
             CategoryComboBox.ItemsSource = MainWindow.db.Categories.ToList();
             CategoryComboBox.SelectedIndex = FindIndex(MainWindow.db.Categories.ToList(), item.CategoryID);
 
-            PriceTextBox.Text = item.Price.ToString();
-            WeightTextBox.Text = item.Weight.ToString();
-            var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            var destinationPath = $"{baseDirectory}image\\{item.Picture}";
-            Uri fileUri = new Uri(destinationPath);
+            PriceTextBox.Value = double.Parse(item.Price.ToString());
+            WeightTextBox.Value = double.Parse(item.Weight.ToString());
+            if (item.Picture != null)
+            {
+                var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                var destinationPath = $"{baseDirectory}image\\{item.Picture}";
+                Uri fileUri = new Uri(destinationPath);
 
-            productImage.Source = new BitmapImage(fileUri);
-            P_Picture = item.Picture;
-
+                productImage.Source = new BitmapImage(fileUri);
+                P_Picture = item.Picture;
+            }
+            else
+            {
+                ChangeBtn.Content = "Browse";
+            }
             this.DataContext = this;
         }
 
         private void UpdateBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(NameTextBox.Text) && !string.IsNullOrWhiteSpace(PriceTextBox.Text) && !string.IsNullOrWhiteSpace(WeightTextBox.Text))
+            if (!string.IsNullOrWhiteSpace(NameTextBox.Text) && PriceTextBox.Value > 0 && WeightTextBox.Value > 0)
             {
                 P_Name = NameTextBox.Text;
                 var temp = CategoryComboBox.SelectedItem as Category;
                 P_CategoryID = temp.ID;
-                P_Price = double.Parse(PriceTextBox.Text);
-                P_Weight = double.Parse(WeightTextBox.Text);
+                P_Price = PriceTextBox.Value;
+                P_Weight = WeightTextBox.Value;
                 this.DialogResult = true;
             }
         }

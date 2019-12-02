@@ -10,7 +10,7 @@
     <Grid>
         <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
             <hc:TextBox Name="NameTextBox" Width="200" Height="30" Margin="10" VerticalContentAlignment="Center"
-                ShowClearButton="True" TextType="Common" hc:InfoElement.Placeholder="Please enter name"/>
+                ShowClearButton="True" TextType="Common" hc:InfoElement.Placeholder="Please enter name" hc:InfoElement.Necessary="True"/>
             <Button Name="CreateBtn" Click="CreateBtn_Click" Margin="10" IsDefault="True" HorizontalAlignment="Center" Width="80">Create</Button>
         </StackPanel>
     </Grid>

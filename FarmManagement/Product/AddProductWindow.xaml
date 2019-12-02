@@ -26,20 +26,19 @@
                 </Grid.RowDefinitions>
 
                 <hc:TextBox Grid.Row="0" Name="NameTextBox" Width="280" Height="30" Margin="10" VerticalContentAlignment="Center"
-                ShowClearButton="True" TextType="Common" hc:InfoElement.Placeholder="Please enter name"
-                hc:InfoElement.TitleWidth="60" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Name"/>
+                ShowClearButton="True" TextType="Common" hc:InfoElement.Placeholder="Please enter name" hc:InfoElement.Necessary="True"
+                hc:InfoElement.TitleWidth="70" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Name"/>
 
                 <hc:ComboBox Grid.Row="1" Name="CategoryComboBox" Width="280" Height="30" Margin="10" VerticalContentAlignment="Center"
-                DisplayMemberPath="Name" SelectedValuePath="ID" Focusable="False" IsEditable="True" IsReadOnly="True" hc:InfoElement.Placeholder="Please select"
-                hc:InfoElement.TitleWidth="60" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Category"/>
+                DisplayMemberPath="Name" SelectedValuePath="ID" Focusable="False" IsEditable="True" IsReadOnly="True" hc:InfoElement.Placeholder="Please select category" hc:InfoElement.Necessary="True"
+                hc:InfoElement.TitleWidth="70" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Category"/>
 
-                <hc:TextBox Grid.Row="2" Name="PriceTextBox" Width="280" Height="30" Margin="10" VerticalContentAlignment="Center"
-                ShowClearButton="True" TextType="Common" hc:InfoElement.Placeholder="Please enter price"
-                 hc:InfoElement.TitleWidth="60" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Price"/>
+                <hc:NumericUpDown Grid.Row="2" Name="PriceTextBox" DecimalPlaces="2" ShowClearButton="True" Width="280" Height="30" Margin="10" 
+                hc:InfoElement.TitleWidth="70" hc:InfoElement.Placeholder="Please enter price" hc:InfoElement.Necessary="True" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Price" Style="{StaticResource NumericUpDownPlus}"/>
 
-                <hc:TextBox Grid.Row="3" Name="WeightTextBox" Width="280" Height="30" Margin="10" VerticalContentAlignment="Center"
-                ShowClearButton="True" TextType="Common" hc:InfoElement.Placeholder="Please enter weight"
-                 hc:InfoElement.TitleWidth="60" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Weight"/>
+                <hc:NumericUpDown Grid.Row="3" Name="WeightTextBox" DecimalPlaces="2" ShowClearButton="True" Width="280" Height="30" Margin="10" 
+                hc:InfoElement.TitleWidth="70" hc:InfoElement.Placeholder="Please enter weight" hc:InfoElement.Necessary="True" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Weight" Style="{StaticResource NumericUpDownPlus}"/>
+
             </Grid>
 
             <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="10,10,10,0">
