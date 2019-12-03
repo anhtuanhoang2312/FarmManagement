@@ -42,6 +42,7 @@
           <Property Name="CustomerID" Type="varchar" MaxLength="10" />
           <Property Name="Date" Type="date" />
           <Property Name="Total" Type="float" />
+          <Property Name="Status" Type="nvarchar" MaxLength="20" />
           <Property Name="isDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="InvoiceDetail">
@@ -230,6 +231,7 @@
           <Property Name="CustomerID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="Total" Type="Double" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="isDeleted" Type="Boolean" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_I_C" FromRole="Invoice" ToRole="Customer" />
           <NavigationProperty Name="InvoiceDetails" Relationship="Self.FK_ID_I" FromRole="Invoice" ToRole="InvoiceDetail" />
@@ -427,6 +429,7 @@
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
               </MappingFragment>
             </EntityTypeMapping>

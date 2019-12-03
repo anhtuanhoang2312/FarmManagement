@@ -1,0 +1,46 @@
+﻿<Window x:Class="FarmManagement.AddCustomerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FarmManagement"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        mc:Ignorable="d"
+        Title="Add Customer" Height="300" Width="455" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="Field">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <hc:TextBox Grid.Row="0" Name="NameTextBox" Width="400" Height="30" Margin="10" VerticalContentAlignment="Center"
+                ShowClearButton="True" TextType="Common" hc:InfoElement.Placeholder="Please enter name" hc:InfoElement.Necessary="True"
+                hc:InfoElement.TitleWidth="80" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Name"/>
+
+            <hc:TextBox Grid.Row="1" Name="AddressTextBox" Width="400" Height="30" Margin="10" VerticalContentAlignment="Center"
+                ShowClearButton="True" TextType="Common" hc:InfoElement.Placeholder="Please enter address" hc:InfoElement.Necessary="True"
+                hc:InfoElement.TitleWidth="80" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Address"/>
+
+            <hc:TextBox Grid.Row="2" Name="TelephoneTextBox" Width="400" Height="30" Margin="10" VerticalContentAlignment="Center"
+                ShowClearButton="True" TextType="Common" hc:InfoElement.Placeholder="Please enter telephone" hc:InfoElement.Necessary="True"
+                hc:InfoElement.TitleWidth="80" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Telephone"/>
+
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Name="AddBtn" Width="80" Click="AddBtn_Click">Add</Button>
+            <Button Grid.Column="2" Name="Cancel" Width="80" IsCancel="True">Cancel</Button>
+        </Grid>
+    </Grid>
+</Window>

@@ -32,7 +32,13 @@
 
         <DataGrid AutoGenerateColumns="False" Name="productDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                               DataGrid.GridLinesVisibility="None"  HeadersVisibility="Column" CanUserAddRows="False" SelectionMode="Single" 
-                              IsReadOnly="True" Margin="10,0,10,10" Grid.Row="1">
+                              IsReadOnly="True" Margin="10,0,10,10" Grid.Row="1" MouseDoubleClick="productDataGrid_MouseDoubleClick">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Edit" Click="EditButton_Click"/>
+                    <MenuItem Header="Remove" Click="RemoveButton_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Image" Width="*">
                     <DataGridTemplateColumn.CellTemplate>

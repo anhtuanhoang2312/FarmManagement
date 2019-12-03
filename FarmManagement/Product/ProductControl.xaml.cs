@@ -53,9 +53,9 @@ namespace FarmManagement
 
                 while (cell.Value != null)
                 {
-                    var categoryname = sheet.Cells[$"C{row}"].StringValue;
+                    var categoryid = sheet.Cells[$"C{row}"].StringValue;
 
-                    bool has = MainWindow.db.Categories.ToList().Any(cus => cus.Name == categoryname);
+                    bool has = MainWindow.db.Categories.ToList().Any(cus => cus.ID == categoryid);
                     if (has == true)
                     {
                         var name = sheet.Cells[$"B{row}"].StringValue;
@@ -78,7 +78,8 @@ namespace FarmManagement
                         {
                             ID = IDGenerator.createID("P"),
                             Name = name,
-                            CategoryID = (from category in MainWindow.db.Categories where category.Name == categoryname select category.ID).Single(),
+                            //CategoryID = (from category in MainWindow.db.Categories where category.Name == categoryid select category.ID).Single(),
+                            CategoryID = categoryid,
                             Price = price,
                             Weight = weight,
                             isDeleted = false,
@@ -92,56 +93,62 @@ namespace FarmManagement
                         cell = sheet.Cells[$"{col}{row}"];
                     }
                     else
-                    {
-                        
-                        string message = "The category '" + categoryname + "' does not exist. Do you want to add new category?";
+                    {                      
+                        string message = "The category with ID '" + categoryid + "' does not exist. Do you want to add new category?";
 
                         if (MessageBox.Show(message, "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                         {
-                            var category = new Category()
+                            var newCategory = new AddCategoryWindow();
+
+                            if (newCategory.ShowDialog() == true)
                             {
-                                ID = IDGenerator.createID("CT"),
-                                Name = categoryname,
-                                isDeleted = false,
-                            };
+                                if(newCategory.CT_Name != null)
+                                {
+                                    var category = new Category()
+                                    {
+                                        ID = categoryid,
+                                        Name = newCategory.CT_Name,
+                                        isDeleted = false,
+                                    };
 
-                            MainWindow.db.Categories.Add(category);
-                            MainWindow.db.SaveChanges();
-                            CategoryControl.category_notification.CategoryChange = true;
+                                    MainWindow.db.Categories.Add(category);
+                                    MainWindow.db.SaveChanges();
+                                    CategoryControl.category_notification.CategoryChange = true;
 
-                            var name = sheet.Cells[$"B{row}"].StringValue;
-                            var price = sheet.Cells[$"D{row}"].DoubleValue;
-                            var weight = sheet.Cells[$"E{row}"].DoubleValue;
-                            var imageName = sheet.Cells[$"F{row}"].StringValue;
+                                    var name = sheet.Cells[$"B{row}"].StringValue;
+                                    var price = sheet.Cells[$"D{row}"].DoubleValue;
+                                    var weight = sheet.Cells[$"E{row}"].DoubleValue;
+                                    var imageName = sheet.Cells[$"F{row}"].StringValue;
 
-                            var imageSourceInfo = new FileInfo(screen.FileName);
-                            var imageSourceFullPath = $"{imageSourceInfo.DirectoryName}\\images\\{imageName}";
-                            var imageSourceFileInfo = new FileInfo(imageSourceFullPath);
+                                    var imageSourceInfo = new FileInfo(screen.FileName);
+                                    var imageSourceFullPath = $"{imageSourceInfo.DirectoryName}\\images\\{imageName}";
+                                    var imageSourceFileInfo = new FileInfo(imageSourceFullPath);
 
-                            var uniqueName = $"{Guid.NewGuid()}.{imageSourceFileInfo.Extension}";
+                                    var uniqueName = $"{Guid.NewGuid()}.{imageSourceFileInfo.Extension}";
 
-                            var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                            var destinationPath = $"{baseDirectory}image\\{uniqueName}";
+                                    var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                                    var destinationPath = $"{baseDirectory}image\\{uniqueName}";
 
-                            File.Copy(imageSourceFullPath, destinationPath);
+                                    File.Copy(imageSourceFullPath, destinationPath);
 
-                            var newProduct = new Product()
-                            {
-                                ID = IDGenerator.createID("P"),
-                                Name = name,
-                                CategoryID = (from category1 in MainWindow.db.Categories where category1.Name == categoryname select category1.ID).Single(),
-                                Price = price,
-                                Weight = weight,
-                                isDeleted = false,
-                                Picture = uniqueName,
-                            };
+                                    var newProduct = new Product()
+                                    {
+                                        ID = IDGenerator.createID("P"),
+                                        Name = name,
+                                        CategoryID = categoryid,
+                                        Price = price,
+                                        Weight = weight,
+                                        isDeleted = false,
+                                        Picture = uniqueName,
+                                    };
 
-                            MainWindow.db.Products.Add(newProduct);
-                            MainWindow.db.SaveChanges();
+                                    MainWindow.db.Products.Add(newProduct);
+                                    MainWindow.db.SaveChanges();
+                                }
+                            }
 
                             row++;
                             cell = sheet.Cells[$"{col}{row}"];
-
                         }
                         else
                         {
@@ -187,12 +194,6 @@ namespace FarmManagement
 
             if (selectedItem != null)
             {
-                //var newProduct = new EditProductWindow(selectedItem.CategoryID, selectedItem.Picture);
-
-                //newProduct.P_Name = selectedItem.Name;
-                //newProduct.P_Price = selectedItem.Price ?? 0; // 0 se la gia tri mac dinh neu Price mang gia tri NULL
-                //newProduct.P_Weight = selectedItem.Weight ?? 0;
-
                 var newProduct = new EditProductWindow(selectedItem);
 
                 if (newProduct.ShowDialog() == true)
@@ -237,6 +238,31 @@ namespace FarmManagement
         private void ProductNotification_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             productDataGrid.ItemsSource = MainWindow.db.Products.ToList();
+        }
+
+        private void productDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
+
+            if (row != null)
+            {
+                Product selectedItem = (Product)row.Item;
+
+                var newProduct = new EditProductWindow(selectedItem);
+
+                if (newProduct.ShowDialog() == true)
+                {
+                    var update = (from product in MainWindow.db.Products where product.ID == selectedItem.ID select product).Single();
+                    update.Name = newProduct.P_Name;
+                    update.CategoryID = newProduct.P_CategoryID;
+                    update.Price = newProduct.P_Price;
+                    update.Weight = newProduct.P_Weight;
+                    update.Picture = newProduct.P_Picture;
+                    MainWindow.db.SaveChanges();
+
+                    productDataGrid.ItemsSource = MainWindow.db.Products.ToList();
+                }
+            }
         }
     }
 }

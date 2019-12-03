@@ -157,5 +157,27 @@ namespace FarmManagement
         {
             categoryDataGrid.ItemsSource = MainWindow.db.Categories.ToList();
         }
+
+        private void categoryDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGridRow row = ItemsControl.ContainerFromElement((DataGrid)sender, e.OriginalSource as DependencyObject) as DataGridRow;
+
+            if (row != null)
+            {
+                Category selectedItem = (Category)row.Item;
+
+                var newCategory = new EditCategoryWindow(selectedItem);
+
+                if (newCategory.ShowDialog() == true)
+                {
+                    var updatecategory = (from category in MainWindow.db.Categories where category.ID == selectedItem.ID select category).Single();
+                    updatecategory.Name = newCategory.CT_Name;
+                    MainWindow.db.SaveChanges();
+                    ProductControl.product_notification.CategoryChange = true;
+
+                    categoryDataGrid.ItemsSource = MainWindow.db.Categories.ToList();
+                }
+            }
+        }
     }
 }

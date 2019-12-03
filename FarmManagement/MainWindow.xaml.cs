@@ -31,6 +31,8 @@ namespace FarmManagement
         public static FarmEntities db = new FarmEntities();
         public static ProductControl productpg = new ProductControl();
         public static CategoryControl categorypg = new CategoryControl();
+        public static CustomerControl customerpg = new CustomerControl();
+        public static InvoiceControl invoicepg = new InvoiceControl();
 
         public MainWindow()
         {         
@@ -49,6 +51,14 @@ namespace FarmManagement
                 else if (item.Name == "Categories")
                 {
                     Control.Show(MainContent, categorypg);
+                }
+                else if (item.Name == "Customers")
+                {
+                    Control.Show(MainContent, customerpg);
+                }
+                else if (item.Name == "Invoices")
+                {
+                    Control.Show(MainContent, invoicepg);
                 }
             }
         }

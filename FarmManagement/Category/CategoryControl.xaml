@@ -29,7 +29,13 @@
 
         <DataGrid AutoGenerateColumns="False" Name="categoryDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                               DataGrid.GridLinesVisibility="None"  HeadersVisibility="Column" CanUserAddRows="False" SelectionMode="Single" 
-                              IsReadOnly="True" Margin="10,0,10,10" Grid.Row="1">
+                              IsReadOnly="True" Margin="10,0,10,10" Grid.Row="1" MouseDoubleClick="categoryDataGrid_MouseDoubleClick">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Edit" Click="EditButton_Click"/>
+                    <MenuItem Header="Remove" Click="RemoveButton_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Width="*" Binding="{Binding ID}"/>
                 <DataGridTextColumn Header="Name" Width="4*" Binding="{Binding Name}"/>
