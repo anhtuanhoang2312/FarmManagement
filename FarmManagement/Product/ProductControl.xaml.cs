@@ -54,11 +54,11 @@ namespace FarmManagement
                 while (cell.Value != null)
                 {
                     var categoryid = sheet.Cells[$"C{row}"].StringValue;
+                    var name = sheet.Cells[$"B{row}"].StringValue;
 
                     bool has = MainWindow.db.Categories.ToList().Any(cus => cus.ID == categoryid);
                     if (has == true)
                     {
-                        var name = sheet.Cells[$"B{row}"].StringValue;
                         var price = sheet.Cells[$"D{row}"].DoubleValue;
                         var weight = sheet.Cells[$"E{row}"].DoubleValue;
                         var imageName = sheet.Cells[$"F{row}"].StringValue;
@@ -94,7 +94,7 @@ namespace FarmManagement
                     }
                     else
                     {                      
-                        string message = "The category with ID '" + categoryid + "' does not exist. Do you want to add new category?";
+                        string message = "The category with ID \"" + categoryid + "\" in product \"" + name + "\" does not exist.\nDo you want to add a new category? You can skip importing this product by clicking \"No\".";
 
                         if (MessageBox.Show(message, "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                         {
@@ -115,7 +115,6 @@ namespace FarmManagement
                                     MainWindow.db.SaveChanges();
                                     CategoryControl.category_notification.CategoryChange = true;
 
-                                    var name = sheet.Cells[$"B{row}"].StringValue;
                                     var price = sheet.Cells[$"D{row}"].DoubleValue;
                                     var weight = sheet.Cells[$"E{row}"].DoubleValue;
                                     var imageName = sheet.Cells[$"F{row}"].StringValue;
@@ -158,7 +157,7 @@ namespace FarmManagement
                     }
                 }
 
-                MessageBox.Show("Import successfully!", "Message");
+                MessageBox.Show("Import completed!", "Message");
 
                 productDataGrid.ItemsSource = MainWindow.db.Products.ToList();
             }
