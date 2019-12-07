@@ -54,12 +54,13 @@ namespace FarmManagement
                 {
                     var customerid = sheet.Cells[$"B{row}"].StringValue;
 
-                    bool has = MainWindow.db.Customers.ToList().Any(cus => cus.ID == customerid);
-                    if (has == true)
+                    bool exists = MainWindow.db.Customers.ToList().Any(cus => cus.ID == customerid);
+                    if (exists == true)
                     {
                         var id = sheet.Cells[$"B{row}"].StringValue;
                         var date = sheet.Cells[$"C{row}"].DateTimeValue;
                         var total = sheet.Cells[$"D{row}"].DoubleValue;
+                        var status = sheet.Cells[$"E{row}"].StringValue;
 
                         var newInvoice = new Invoice()
                         {
@@ -67,6 +68,7 @@ namespace FarmManagement
                             CustomerID = customerid,
                             Date = date,
                             Total = total,
+                            Status = status,
                             isDeleted = false,
                         };
 
@@ -130,6 +132,106 @@ namespace FarmManagement
                     }
                 }
 
+                //Invoice detail sheet
+                var sheetd = workbook.Worksheets[1];
+
+                var cold = "A";
+                var rowd = 2;
+
+                var celld = sheetd.Cells[$"{cold}{rowd}"];
+
+                while (celld.Value != null)
+                {
+                    var invoiceid = sheetd.Cells[$"A{rowd}"].StringValue;
+                    var productid = sheetd.Cells[$"B{rowd}"].StringValue;
+
+                    bool existsinvoice = MainWindow.db.Invoices.ToList().Any(cus => cus.ID == invoiceid);
+                    bool existsproduct = MainWindow.db.Products.ToList().Any(cus => cus.ID == productid);
+
+                    if (existsinvoice != true)
+                    {
+                        string message = "The invoice with ID '" + invoiceid + "' does not exist. Do you want to add new invoice?";
+
+                        if (MessageBox.Show(message, "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                        {
+                            var newInvoice = new AddInvoiceWindow(invoiceid);
+
+                            if (newInvoice.ShowDialog() == true)
+                            {
+                                if (!string.IsNullOrWhiteSpace(newInvoice.I_CustomerID) && !string.IsNullOrWhiteSpace(newInvoice.I_Date.ToString()) && newInvoice.I_Total > 0 && !string.IsNullOrWhiteSpace(newInvoice.I_Status))
+                                {
+                                    var invoice = new Invoice()
+                                    {
+                                        ID = invoiceid,
+                                        CustomerID = newInvoice.I_CustomerID,
+                                        Date = newInvoice.I_Date,
+                                        Total = newInvoice.I_Total,
+                                        Status = newInvoice.I_Status,
+                                        isDeleted = false,
+                                    };
+
+                                    MainWindow.db.Invoices.Add(invoice);
+                                    MainWindow.db.SaveChanges();
+
+                                    invoiceDataGrid.ItemsSource = MainWindow.db.Invoices.ToList();
+                                }
+                            }
+                        }
+                    }
+
+                    if (existsproduct != true)
+                    {
+                        string message = "The product with ID '" + productid + "' in Invoice #'" + invoiceid + "' does not exist. Do you want to add new product?";
+
+                        if (MessageBox.Show(message, "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                        {
+                            var newProduct = new AddProductWindow();
+
+                            if (newProduct.ShowDialog() == true)
+                            {
+                                if (!string.IsNullOrWhiteSpace(newProduct.P_Name) && !string.IsNullOrWhiteSpace(newProduct.P_CategoryID) && newProduct.P_Price > 0 && newProduct.P_Weight > 0)
+                                {
+                                    var product = new Product()
+                                    {
+                                        ID = productid,
+                                        Name = newProduct.P_Name,
+                                        CategoryID = newProduct.P_CategoryID,
+                                        Price = newProduct.P_Price,
+                                        Weight = newProduct.P_Weight,
+                                        isDeleted = false,
+                                        Picture = newProduct.P_Picture,
+                                    };
+
+                                    MainWindow.db.Products.Add(product);
+                                    MainWindow.db.SaveChanges();
+
+                                    //notify changed here!!
+                                }
+                            }
+                        }
+                    }
+
+                    var weight = sheetd.Cells[$"C{rowd}"].DoubleValue;
+                    var unitprice = sheetd.Cells[$"D{rowd}"].DoubleValue;
+                    var amount = sheetd.Cells[$"E{rowd}"].DoubleValue;
+
+                    var newInvoiceDetail = new InvoiceDetail()
+                    {
+                        InvoiceID = invoiceid,
+                        ProductID = productid,
+                        Weight = weight,
+                        UnitPrice = unitprice,
+                        Amount = amount,
+                        isDeleted = false,
+                    };
+
+                    MainWindow.db.InvoiceDetails.Add(newInvoiceDetail);
+                    MainWindow.db.SaveChanges();
+
+                    rowd++;
+                    celld = sheetd.Cells[$"{cold}{rowd}"];
+                }
+
                 MessageBox.Show("Import successfully!", "Message");
 
                 invoiceDataGrid.ItemsSource = MainWindow.db.Invoices.ToList();
@@ -142,19 +244,6 @@ namespace FarmManagement
 
             if (newInvoice.ShowDialog() == true)
             {
-                var invoice = new Invoice()
-                {
-                    ID = newInvoice.I_ID,
-                    CustomerID = newInvoice.I_CustomerID,
-                    Date = newInvoice.I_Date,
-                    Total = newInvoice.I_Total,
-                    Status = newInvoice.I_Status,
-                    isDeleted = false,
-                };
-
-                MainWindow.db.Invoices.Add(invoice);
-                MainWindow.db.SaveChanges();
-
                 invoiceDataGrid.ItemsSource = MainWindow.db.Invoices.ToList();
             }
         }
@@ -234,20 +323,12 @@ namespace FarmManagement
             {
                 Invoice selectedItem = (Invoice)row.Item;
 
-                //var newProduct = new EditProductWindow(selectedItem);
+                var newProduct = new InvoiceDetailWindow(selectedItem);
 
-                //if (newProduct.ShowDialog() == true)
-                //{
-                //    var update = (from product in MainWindow.db.Products where product.ID == selectedItem.ID select product).Single();
-                //    update.Name = newProduct.P_Name;
-                //    update.CategoryID = newProduct.P_CategoryID;
-                //    update.Price = newProduct.P_Price;
-                //    update.Weight = newProduct.P_Weight;
-                //    update.Picture = newProduct.P_Picture;
-                //    MainWindow.db.SaveChanges();
-
-                //    productDataGrid.ItemsSource = MainWindow.db.Products.ToList();
-                //}
+                if (newProduct.ShowDialog() == true)
+                {
+                    //something...
+                }
             }
         }
     }

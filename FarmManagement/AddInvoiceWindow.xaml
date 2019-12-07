@@ -16,28 +16,27 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="0.37*"/>
             <RowDefinition Height="4*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.63*"/>
         </Grid.RowDefinitions>
         <Grid Name="Information" Grid.ColumnSpan="2" Margin="10,10,10,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Margin="0,15,0,0" HorizontalAlignment="Left">
+            <Grid Margin="0,10,0,0" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <hc:TextBox Grid.Row="0" Name="InvoiceTextBox" Width="350" Height="30" Margin="10" VerticalContentAlignment="Center"
-                ShowClearButton="True" TextType="Common" IsEnabled="False"
-                hc:InfoElement.TitleWidth="70" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Invoice #"/>
+                IsReadOnly="True" hc:InfoElement.TitleWidth="70" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Invoice #"/>
 
                 <hc:ComboBox Grid.Row="1" Name="CustomerComboBox" Width="350" Height="30" Margin="10" VerticalContentAlignment="Center"
                 DisplayMemberPath="Name" SelectedValuePath="ID" Focusable="False" IsEditable="True" IsReadOnly="True" hc:InfoElement.Placeholder="Please select customer"
                 hc:InfoElement.TitleWidth="70" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Customer"/>
             </Grid>
-            <Grid Margin="0,15,0,0" Grid.Column="1" HorizontalAlignment="Right">
+            <Grid Margin="0,10,0,0" Grid.Column="1" HorizontalAlignment="Right">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
@@ -47,7 +46,7 @@
                 hc:InfoElement.TitleWidth="50" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Date"/>
 
                 <hc:ComboBox Grid.Row="1" Name="StatusComboBox" Width="350" Height="30" Margin="10" VerticalContentAlignment="Center"
-                SelectedItem="{Binding statusList, Mode=TwoWay}" Focusable="False" IsEditable="True" IsReadOnly="True" hc:InfoElement.Placeholder="Please select status"
+                ItemsSource="{Binding statusList}" Focusable="False" IsEditable="True" IsReadOnly="True" hc:InfoElement.Placeholder="Please select status"
                 hc:InfoElement.TitleWidth="50" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Status"/>
             </Grid>
         </Grid>
@@ -66,7 +65,7 @@
                     <hc:ComboBox Name="ProductComboBox" Width="350" Height="30" Margin="10" VerticalContentAlignment="Center"
                 DisplayMemberPath="Name" SelectedValuePath="ID" Focusable="False" IsEditable="True" IsReadOnly="True" hc:InfoElement.Placeholder="Please select product"
                 hc:InfoElement.TitleWidth="70" hc:InfoElement.TitleAlignment="Left" hc:InfoElement.Title="Product"/>
-                    <!--<Button Name="AddButton" Margin="15,0" Content="Add" Click="AddButton_Click"/>-->
+                    <Button Name="AddProductButton" Margin="15,0" Content="Add" Click="AddProductButton_Click"/>
                     <!--<Button Name="RemoveButton" Margin="0" Content="Remove" Click="RemoveButton_Click"/>-->
                 </StackPanel>
             </Grid>
@@ -81,9 +80,8 @@
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Width="2*" Binding="{Binding Product.Name}"/>
+                    <DataGridTextColumn Header="Name" Width="2*" Binding="{Binding ProductID}"/>
                     <DataGridTextColumn Header="Price" Width="1.5*" Binding="{Binding UnitPrice}"/>
-                    <!--<DataGridTextColumn Header="Weight" Width="*" Binding="{Binding Weight}"/>-->
                     <DataGridTemplateColumn Header="Weight" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -96,6 +94,16 @@
                     <DataGridTextColumn Header="Action" Width="*" Binding="{Binding Total}"/>
                 </DataGrid.Columns>
             </DataGrid>
+        </Grid>
+        <Grid Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Name="AddButton" Width="80" Click="AddButton_Click">Add</Button>
+            <Button Grid.Column="2" Name="Cancel" Width="80" IsCancel="True">Cancel</Button>
         </Grid>
     </Grid>
 </Window>

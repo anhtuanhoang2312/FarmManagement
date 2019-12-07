@@ -54,6 +54,21 @@ namespace FarmManagement.Class
             }
         }
 
+        private bool _invoiceDetailChange = false;
+
+        public bool InvoiceDetailChange
+        {
+            get => _invoiceDetailChange;
+            set
+            {
+                _invoiceDetailChange = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("_invoiceDetailChange"));
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

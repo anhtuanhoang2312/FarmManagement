@@ -25,8 +25,8 @@
                 <hc:SideMenuItem.Icon>
                     <Image Source="/Icon/Product.png" Width="24" Height="24"/>
                 </hc:SideMenuItem.Icon>
-                <hc:SideMenuItem Name="Products" Header="Products"/>
                 <hc:SideMenuItem Name="Categories" Header="Categories"/>
+                <hc:SideMenuItem Name="Products" Header="Products"/>
             </hc:SideMenuItem>
 
             <hc:SideMenuItem Name="MainSales" Header="Sales">

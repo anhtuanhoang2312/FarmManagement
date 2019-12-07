@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FarmManagement"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="1000">
     <Grid>
@@ -21,9 +22,8 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock Text="Search:" Margin="0,10" VerticalAlignment="Center"/>
-                <TextBox Name="keywordTextBox" Width="200" Height="30" TextChanged="KeywordTextBox_TextChanged" Margin="10" VerticalContentAlignment="Center">
-                </TextBox>
+                <hc:SearchBar Name="keywordTextBox" Width="300" Margin="10" ShowClearButton="True" hc:InfoElement.Placeholder="Please enter name" 
+                              TextChanged="KeywordTextBox_TextChanged" Style="{StaticResource SearchBarPlus}"/>
             </StackPanel>
         </Grid>
 

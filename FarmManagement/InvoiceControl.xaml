@@ -22,8 +22,8 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock Text="Search:" Margin="0,10" VerticalAlignment="Center"/>
-                <TextBox Name="keywordTextBox" Width="200" Height="30" TextChanged="KeywordTextBox_TextChanged" Margin="10" VerticalContentAlignment="Center"></TextBox>
+                <hc:SearchBar Name="keywordTextBox" Width="300" Margin="10" ShowClearButton="True" hc:InfoElement.Placeholder="Please enter ID" 
+                              TextChanged="KeywordTextBox_TextChanged" Style="{StaticResource SearchBarPlus}"/>
             </StackPanel>
         </Grid>
 
@@ -41,7 +41,7 @@
                 <DataGridTextColumn Header="Date" Width="1.5*" Binding="{Binding Date}"/>
                 <DataGridTextColumn Header="Customer" Width="1.5*" Binding="{Binding Customer.Name}"/>
                 <DataGridTextColumn Header="Total" Width="*" Binding="{Binding Total}"/>
-                <DataGridTextColumn Header="Status" Width="1.5*" Binding="{Binding Total}"/>
+                <DataGridTextColumn Header="Status" Width="1.5*" Binding="{Binding Status}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
