@@ -143,7 +143,7 @@ namespace FarmManagement
                                                             MainWindow.db.Products.Add(product);
                                                             MainWindow.db.SaveChanges();
 
-                                                            //notify changed here!!
+                                                            //maybe notify changed here?
 
                                                             var weight = sheetd.Cells[$"C{rowd}"].DoubleValue;
                                                             var unitprice = sheetd.Cells[$"D{rowd}"].DoubleValue;
@@ -165,6 +165,25 @@ namespace FarmManagement
                                                     }
                                                 }
                                             }
+                                            else
+                                            {
+                                                var weight = sheetd.Cells[$"C{rowd}"].DoubleValue;
+                                                var unitprice = sheetd.Cells[$"D{rowd}"].DoubleValue;
+                                                var amount = sheetd.Cells[$"E{rowd}"].DoubleValue;
+
+                                                var newInvoiceDetail = new InvoiceDetail()
+                                                {
+                                                    InvoiceID = newid,
+                                                    ProductID = productid,
+                                                    Weight = weight,
+                                                    UnitPrice = unitprice,
+                                                    Amount = amount,
+                                                    isDeleted = false,
+                                                };
+
+                                                MainWindow.db.InvoiceDetails.Add(newInvoiceDetail);
+                                                MainWindow.db.SaveChanges();
+                                            }
                                         }
 
                                         rowd++;
@@ -172,6 +191,115 @@ namespace FarmManagement
                                     }
                                 }
                             }
+                        }
+                    }
+                    else
+                    {
+                        var date = sheet.Cells[$"C{row}"].DateTimeValue;
+                        var total = sheet.Cells[$"D{row}"].DoubleValue;
+                        var status = sheet.Cells[$"E{row}"].StringValue;
+
+                        var newInvoice = new Invoice()
+                        {
+                            ID = newid,
+                            CustomerID = customerid,
+                            Date = date,
+                            Total = total,
+                            Status = status,
+                            isDeleted = false,
+                        };
+
+                        MainWindow.db.Invoices.Add(newInvoice);
+                        MainWindow.db.SaveChanges();
+
+                        //Invoice detail sheet
+                        var sheetd = workbook.Worksheets[1];
+
+                        var cold = "A";
+                        var rowd = 2;
+
+                        var celld = sheetd.Cells[$"{cold}{rowd}"];
+
+                        while (celld.Value != null)
+                        {
+                            var invoiceid = sheetd.Cells[$"A{rowd}"].StringValue;
+
+                            if (invoiceid == id)
+                            {
+                                var productid = sheetd.Cells[$"B{rowd}"].StringValue;
+                                bool existsproduct = MainWindow.db.Products.ToList().Any(cus => cus.ID == productid);
+
+                                if (existsproduct != true)
+                                {
+                                    string messaged = "The product with ID \"" + productid + "\" in invoice #" + id + " does not exist.\nDo you want to add a new product? You can skip importing this product by clicking \"No\".";
+
+                                    if (MessageBox.Show(messaged, "Warning", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                                    {
+                                        var newProduct = new AddProductWindow();
+
+                                        if (newProduct.ShowDialog() == true)
+                                        {
+                                            if (!string.IsNullOrWhiteSpace(newProduct.P_Name) && !string.IsNullOrWhiteSpace(newProduct.P_CategoryID) && newProduct.P_Price > 0 && newProduct.P_Weight > 0)
+                                            {
+                                                var product = new Product()
+                                                {
+                                                    ID = productid,
+                                                    Name = newProduct.P_Name,
+                                                    CategoryID = newProduct.P_CategoryID,
+                                                    Price = newProduct.P_Price,
+                                                    Weight = newProduct.P_Weight,
+                                                    isDeleted = false,
+                                                    Picture = newProduct.P_Picture,
+                                                };
+
+                                                MainWindow.db.Products.Add(product);
+                                                MainWindow.db.SaveChanges();
+
+                                                //maybe notify changed here?
+
+                                                var weight = sheetd.Cells[$"C{rowd}"].DoubleValue;
+                                                var unitprice = sheetd.Cells[$"D{rowd}"].DoubleValue;
+                                                var amount = sheetd.Cells[$"E{rowd}"].DoubleValue;
+
+                                                var newInvoiceDetail = new InvoiceDetail()
+                                                {
+                                                    InvoiceID = newid,
+                                                    ProductID = productid,
+                                                    Weight = weight,
+                                                    UnitPrice = unitprice,
+                                                    Amount = amount,
+                                                    isDeleted = false,
+                                                };
+
+                                                MainWindow.db.InvoiceDetails.Add(newInvoiceDetail);
+                                                MainWindow.db.SaveChanges();
+                                            }
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    var weight = sheetd.Cells[$"C{rowd}"].DoubleValue;
+                                    var unitprice = sheetd.Cells[$"D{rowd}"].DoubleValue;
+                                    var amount = sheetd.Cells[$"E{rowd}"].DoubleValue;
+
+                                    var newInvoiceDetail = new InvoiceDetail()
+                                    {
+                                        InvoiceID = newid,
+                                        ProductID = productid,
+                                        Weight = weight,
+                                        UnitPrice = unitprice,
+                                        Amount = amount,
+                                        isDeleted = false,
+                                    };
+
+                                    MainWindow.db.InvoiceDetails.Add(newInvoiceDetail);
+                                    MainWindow.db.SaveChanges();
+                                }
+                            }
+
+                            rowd++;
+                            celld = sheetd.Cells[$"{cold}{rowd}"];
                         }
                     }
 
