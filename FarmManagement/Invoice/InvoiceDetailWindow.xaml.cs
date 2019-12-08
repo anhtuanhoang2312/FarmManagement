@@ -21,15 +21,7 @@ namespace FarmManagement
     /// </summary>
     public partial class InvoiceDetailWindow : Window
     {
-        //public string I_ID { get; set; }
-        //public string I_CustomerID { get; set; }
-        //public DateTime I_Date { get; set; }
-        //public double I_Total { get; set; }
-        //public string I_Status { get; set; }
-
         private BindingList<InvoiceDetail> tempList = new BindingList<InvoiceDetail>();
-
-        public static Notify invoiceDetail_notification = new Notify();
 
         public InvoiceDetailWindow(Invoice item)
         {
@@ -48,8 +40,6 @@ namespace FarmManagement
             StatusComboBox.SelectedIndex = FindIndex(statusList, item.Status); 
             
             LoadDetails(item.ID);
-
-            invoiceDetail_notification.PropertyChanged += InvoiceDetailNotification_PropertyChanged;
 
             this.DataContext = this;
         }
@@ -90,9 +80,12 @@ namespace FarmManagement
             return i;
         }
 
-        private void InvoiceDetailNotification_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Done_Click(object sender, RoutedEventArgs e)
         {
-            invoiceDataGrid.ItemsSource = tempList;
+            var update = (from invoice in MainWindow.db.Invoices where invoice.ID == InvoiceTextBox.Text select invoice).Single();
+            update.Status = StatusComboBox.SelectedItem.ToString();
+            MainWindow.db.SaveChanges();
+            InvoiceControl.invoice_notification.InvoiceDetailChange = true;
         }
     }
 }

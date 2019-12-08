@@ -30,7 +30,7 @@ namespace FarmManagement
         public CustomerControl()
         {
             InitializeComponent();
-            customerDataGrid.ItemsSource = MainWindow.db.Invoices.ToList();
+            customerDataGrid.ItemsSource = MainWindow.db.Customers.ToList();
             customer_notification.PropertyChanged += CustomerNotification_PropertyChanged;
         }
 

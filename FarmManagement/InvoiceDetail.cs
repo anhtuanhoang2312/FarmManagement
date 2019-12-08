@@ -11,14 +11,38 @@ namespace FarmManagement
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class InvoiceDetail
+    using System.ComponentModel;
+
+    public partial class InvoiceDetail : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, e);
+            }
+        }
+
         public string InvoiceID { get; set; }
         public string ProductID { get; set; }
         public Nullable<double> Weight { get; set; }
         public Nullable<double> UnitPrice { get; set; }
-        public Nullable<double> Amount { get; set; }
+
+        private Nullable<double> _amount;
+        public Nullable<double> Amount
+        {
+            get
+            {
+                return _amount;
+            }
+            set
+            {
+                _amount = value;
+                OnPropertyChanged(new PropertyChangedEventArgs("Amount"));
+            }
+        }
         public Nullable<bool> isDeleted { get; set; }
     
         public virtual Invoice Invoice { get; set; }

@@ -21,15 +21,9 @@ namespace FarmManagement
     /// </summary>
     public partial class AddInvoiceWindow : Window
     {
-        public string I_ID { get; set; }
-        public string I_CustomerID { get; set; }
-        public DateTime I_Date { get; set; }
-        public double I_Total { get; set; }
-        public string I_Status { get; set; }
+        public static Notify invoiceDetail_notification = new Notify();
 
         private BindingList<InvoiceDetail> tempList = new BindingList<InvoiceDetail>();
-
-        public static Notify invoiceDetail_notification = new Notify();
 
         public AddInvoiceWindow(string id)
         {
@@ -68,38 +62,70 @@ namespace FarmManagement
             tempList.Add(newInvoiceDetail);
             invoiceDataGrid.ItemsSource = tempList;
 
-            //invoiceDetail_notification.InvoiceDetailChange = true;
+            TotalTextBox.Text = "$" + TotalCalculator().ToString();
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             var customer = CustomerComboBox.SelectedItem as Customer;
 
-            if (CustomerComboBox.SelectedItem != null && StatusComboBox.SelectedItem != null)
+            if (CustomerComboBox.SelectedItem != null && DateDatePicker.Text != null && StatusComboBox.SelectedItem != null)
             {
                 var newInvoice = new Invoice()
                 {
                     ID = InvoiceTextBox.Text,
                     CustomerID = customer.ID,
                     Date = DateTime.Now,
-                    Total = 0,
+                    Total = TotalCalculator(),
                     Status = StatusComboBox.SelectedItem.ToString(),
                     isDeleted = false,
                 };
 
                 MainWindow.db.Invoices.Add(newInvoice);
                 MainWindow.db.SaveChanges();
+
+                ProductNametoIDConverter(tempList);
+
+                foreach (var item in tempList)
+                {
+                    MainWindow.db.InvoiceDetails.Add(item);
+                    MainWindow.db.SaveChanges();
+                }
+
+                this.DialogResult = true;
             }               
+        }
 
-            ProductNametoIDConverter(tempList);
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            InvoiceDetail selectedItem = (InvoiceDetail)invoiceDataGrid.SelectedItem;
 
-            foreach (var item in tempList)
+            if (selectedItem != null)
             {
-                MainWindow.db.InvoiceDetails.Add(item);
-                MainWindow.db.SaveChanges();
+                foreach (var detail in tempList)
+                {
+                    if (detail.InvoiceID == selectedItem.InvoiceID)
+                    {
+                        tempList.Remove(detail);
+                        break;
+                    }
+                }
+
+                invoiceDataGrid.ItemsSource = tempList;
+                TotalTextBox.Text = "$" + TotalCalculator().ToString();
+            }
+        }
+
+        private double TotalCalculator()
+        {
+            double sum = 0;
+
+            foreach (var detail in tempList)
+            {
+                sum = sum + (detail.UnitPrice ?? 0) * (detail.Weight ?? 0);
             }
 
-            this.DialogResult = true;
+            return sum;
         }
 
         private void ProductNametoIDConverter(BindingList<InvoiceDetail> list)
@@ -113,6 +139,25 @@ namespace FarmManagement
         private void InvoiceDetailNotification_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             invoiceDataGrid.ItemsSource = tempList;
+        }
+
+        private void NumericUpDown_ValueChanged(object sender, HandyControl.Data.FunctionEventArgs<double> e)
+        {
+            InvoiceDetail selectedItem = (InvoiceDetail)invoiceDataGrid.SelectedItem;
+
+            if (selectedItem != null)
+            {
+                foreach (var detail in tempList)
+                {
+                    if (detail.InvoiceID == selectedItem.InvoiceID)
+                    {
+                        detail.Amount = (detail.UnitPrice ?? 0) * (detail.Weight ?? 0);
+                    }
+                }
+            }
+
+            invoiceDetail_notification.InvoiceDetailChange = true;
+            TotalTextBox.Text = "$" + TotalCalculator().ToString();
         }
     }
 }

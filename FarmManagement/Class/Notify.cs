@@ -9,6 +9,8 @@ namespace FarmManagement.Class
 {
     public class Notify : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private bool _categoryChange = false;
 
         public bool CategoryChange
@@ -68,7 +70,5 @@ namespace FarmManagement.Class
                 }
             }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

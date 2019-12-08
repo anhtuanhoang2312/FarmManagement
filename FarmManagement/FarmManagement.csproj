@@ -119,16 +119,16 @@
     <Compile Include="Invoice.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="InvoiceControl.xaml.cs">
+    <Compile Include="Invoice\InvoiceControl.xaml.cs">
       <DependentUpon>InvoiceControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="InvoiceDetail.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="AddInvoiceWindow.xaml.cs">
+    <Compile Include="Invoice\AddInvoiceWindow.xaml.cs">
       <DependentUpon>AddInvoiceWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InvoiceDetailWindow.xaml.cs">
+    <Compile Include="Invoice\InvoiceDetailWindow.xaml.cs">
       <DependentUpon>InvoiceDetailWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model.Context.cs">
@@ -171,15 +171,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="InvoiceControl.xaml">
+    <Page Include="Invoice\InvoiceControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="AddInvoiceWindow.xaml">
+    <Page Include="Invoice\AddInvoiceWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="InvoiceDetailWindow.xaml">
+    <Page Include="Invoice\InvoiceDetailWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -262,11 +262,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FarmDB.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="FarmDB_log.ldf">
       <DependentUpon>FarmDB.mdf</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

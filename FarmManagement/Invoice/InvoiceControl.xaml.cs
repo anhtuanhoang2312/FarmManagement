@@ -325,29 +325,15 @@ namespace FarmManagement
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
-            Product selectedItem = (Product)invoiceDataGrid.SelectedItem;
+            Invoice selectedItem = (Invoice)invoiceDataGrid.SelectedItem;
 
             if (selectedItem != null)
             {
-                //var newProduct = new EditProductWindow(selectedItem.CategoryID, selectedItem.Picture);
-
-                //newProduct.P_Name = selectedItem.Name;
-                //newProduct.P_Price = selectedItem.Price ?? 0; // 0 se la gia tri mac dinh neu Price mang gia tri NULL
-                //newProduct.P_Weight = selectedItem.Weight ?? 0;
-
-                var newProduct = new EditProductWindow(selectedItem);
+                var newProduct = new InvoiceDetailWindow(selectedItem);
 
                 if (newProduct.ShowDialog() == true)
                 {
-                    var update = (from product in MainWindow.db.Products where product.ID == selectedItem.ID select product).Single();
-                    update.Name = newProduct.P_Name;
-                    update.CategoryID = newProduct.P_CategoryID;
-                    update.Price = newProduct.P_Price;
-                    update.Weight = newProduct.P_Weight;
-                    update.Picture = newProduct.P_Picture;
-                    MainWindow.db.SaveChanges();
 
-                    invoiceDataGrid.ItemsSource = MainWindow.db.Products.ToList();
                 }
             }
         }
@@ -402,7 +388,7 @@ namespace FarmManagement
 
                 if (newProduct.ShowDialog() == true)
                 {
-                    //something...
+
                 }
             }
         }

@@ -11,7 +11,8 @@ namespace FarmManagement
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +21,7 @@ namespace FarmManagement
             this.InvoiceDetails = new HashSet<InvoiceDetail>();
             this.Payslips = new HashSet<Payslip>();
         }
-    
+
         public string ID { get; set; }
         public string Name { get; set; }
         public string CategoryID { get; set; }
@@ -28,7 +29,7 @@ namespace FarmManagement
         public Nullable<double> Weight { get; set; }
         public string Picture { get; set; }
         public Nullable<bool> isDeleted { get; set; }
-    
+
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; }

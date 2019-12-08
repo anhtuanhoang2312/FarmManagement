@@ -43,15 +43,15 @@
                 <DataGridTemplateColumn Header="Image" Width="*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Image Width="60" Height="60" Source="{Binding Picture, Converter={StaticResource converter}}" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Image Width="60" Height="60" Source="{Binding Picture, Converter={StaticResource converter}, UpdateSourceTrigger=PropertyChanged}" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="ID" Width="*" Binding="{Binding ID}"/>
-                <DataGridTextColumn Header="Name" Width="1.5*" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Category" Width="1.5*" Binding="{Binding Category.Name}"/>
-                <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Price}"/>
-                <DataGridTextColumn Header="Weight" Width="*" Binding="{Binding Weight}"/>
+                <DataGridTextColumn Header="ID" Width="*" Binding="{Binding ID, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Name" Width="1.5*" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Category" Width="1.5*" Binding="{Binding Category.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Price" Width="*" Binding="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="Weight" Width="*" Binding="{Binding Weight, UpdateSourceTrigger=PropertyChanged}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
